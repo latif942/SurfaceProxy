@@ -28,8 +28,6 @@
     display: flex;
     flex-direction: column;
   }
-
-  /* Animated bg */
   body::before {
     content:'';
     position:fixed;
@@ -41,10 +39,7 @@
     z-index:0;
     animation: bgPulse 8s ease-in-out infinite alternate;
   }
-  @keyframes bgPulse {
-    from { opacity:0.7; }
-    to { opacity:1; }
-  }
+  @keyframes bgPulse { from{opacity:0.7} to{opacity:1} }
 
   /* ── TOP BAR ── */
   #topbar {
@@ -52,7 +47,7 @@
     align-items:center;
     gap:10px;
     padding:8px 14px;
-    background: rgba(10,0,16,0.9);
+    background: rgba(10,0,16,0.95);
     border-bottom:1px solid var(--border);
     backdrop-filter:blur(20px);
     position:relative;
@@ -71,13 +66,7 @@
     letter-spacing:-0.5px;
   }
   #logo span { opacity:0.6; }
-
-  /* nav tabs */
-  #nav {
-    display:flex;
-    gap:4px;
-    flex-shrink:0;
-  }
+  #nav { display:flex; gap:4px; flex-shrink:0; }
   .nav-btn {
     padding:6px 14px;
     border:1px solid transparent;
@@ -100,8 +89,6 @@
     border-color:var(--p2);
     box-shadow:0 0 12px rgba(168,85,247,0.2);
   }
-
-  /* address bar */
   #urlbar-wrap {
     flex:1;
     display:flex;
@@ -114,10 +101,7 @@
     min-width:0;
     transition:border-color 0.2s, box-shadow 0.2s;
   }
-  #urlbar-wrap:focus-within {
-    border-color:var(--p2);
-    box-shadow:var(--glow);
-  }
+  #urlbar-wrap:focus-within { border-color:var(--p2); box-shadow:var(--glow); }
   #urlbar {
     flex:1;
     background:transparent;
@@ -146,13 +130,175 @@
   }
   #go-btn:hover { opacity:0.85; }
   #go-btn:active { transform:scale(0.97); }
+  #stealth-btn {
+    padding:6px 12px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--muted);
+    font-size:12px;
+    cursor:pointer;
+    transition:all 0.2s;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  #stealth-btn:hover { color:var(--p3); border-color:var(--p2); }
+  #panic-hint { font-size:10px; color:rgba(168,85,247,0.35); white-space:nowrap; flex-shrink:0; }
 
-  /* ── MAIN AREA ── */
+  /* ── BROWSER CHROME BAR ── */
+  #browser-chrome {
+    display:none;
+    flex-shrink:0;
+    background:rgba(10,0,16,0.97);
+    border-bottom:1px solid var(--border);
+    z-index:99;
+  }
+  #browser-chrome.visible { display:block; }
+
+  /* Tab bar */
+  #tab-bar {
+    display:flex;
+    align-items:center;
+    gap:2px;
+    padding:6px 10px 0;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  #tab-bar::-webkit-scrollbar { display:none; }
+  .tab {
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:6px 14px 7px;
+    border-radius:8px 8px 0 0;
+    background:rgba(168,85,247,0.06);
+    border:1px solid var(--border);
+    border-bottom:none;
+    font-size:12px;
+    color:var(--muted);
+    cursor:pointer;
+    transition:all 0.15s;
+    min-width:120px;
+    max-width:200px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    flex-shrink:0;
+    position:relative;
+  }
+  .tab.active {
+    background:rgba(168,85,247,0.18);
+    color:var(--text);
+    border-color:var(--p2);
+  }
+  .tab-favicon { width:14px; height:14px; border-radius:2px; flex-shrink:0; }
+  .tab-title { flex:1; overflow:hidden; text-overflow:ellipsis; }
+  .tab-close {
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    flex-shrink:0;
+    opacity:0.5;
+    transition:all 0.15s;
+    cursor:pointer;
+  }
+  .tab-close:hover { opacity:1; background:rgba(168,85,247,0.3); }
+  #new-tab-btn {
+    width:28px;
+    height:28px;
+    border-radius:7px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--muted);
+    font-size:16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    transition:all 0.15s;
+    margin-left:4px;
+  }
+  #new-tab-btn:hover { color:var(--p3); border-color:var(--p2); }
+
+  /* Nav bar (back/forward/reload + url) */
+  #nav-bar {
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 10px 8px;
+  }
+  .ctrl-btn {
+    width:28px;
+    height:28px;
+    border-radius:7px;
+    border:1px solid var(--border);
+    background:rgba(168,85,247,0.07);
+    color:var(--muted);
+    font-size:13px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    transition:all 0.15s;
+  }
+  .ctrl-btn:hover { color:var(--p3); border-color:var(--p2); }
+  .ctrl-btn:disabled { opacity:0.3; cursor:default; }
+  #nav-url-wrap {
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(10,0,16,0.6);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0 10px;
+    transition:border-color 0.2s;
+  }
+  #nav-url-wrap:focus-within { border-color:var(--p2); }
+  #nav-url {
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--text);
+    font-size:12px;
+    padding:5px 0;
+    font-family:'DM Sans',sans-serif;
+  }
+  #nav-url::placeholder { color:var(--muted); }
+  #ssl-badge {
+    font-size:11px;
+    color:#22c55e;
+    flex-shrink:0;
+  }
+  #load-bar {
+    height:2px;
+    background:linear-gradient(90deg,var(--p1),var(--p2),var(--p3));
+    width:0%;
+    transition:width 0.3s;
+    flex-shrink:0;
+  }
+  #load-bar.loading { animation:loadAnim 1.5s ease-in-out infinite; }
+  @keyframes loadAnim {
+    0%{width:0%;margin-left:0}
+    50%{width:60%;margin-left:20%}
+    100%{width:0%;margin-left:100%}
+  }
+
+  /* ── MAIN ── */
   #main {
     flex:1;
     position:relative;
     overflow:hidden;
     z-index:1;
+    display:flex;
+    flex-direction:column;
   }
 
   /* Panels */
@@ -170,41 +316,119 @@
     padding:0;
     display:none;
     flex-direction:column;
+    position:absolute;
+    inset:0;
   }
-  #panel-browser.active {
-    display:flex;
-  }
-  #browser-frame {
+  #panel-browser.active { display:flex; }
+
+  /* iframe stack */
+  #frames-container {
     flex:1;
-    border:none;
+    position:relative;
+    overflow:hidden;
+  }
+  .browser-frame {
+    position:absolute;
+    inset:0;
     width:100%;
+    height:100%;
+    border:none;
     background:#fff;
+    display:none;
   }
-  #browser-home {
-    flex:1;
-    display:flex;
+  .browser-frame.active { display:block; }
+
+  /* New tab page shown inside frames-container */
+  #newtab-page {
+    position:absolute;
+    inset:0;
+    display:none;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:20px;
+    gap:28px;
+    background:var(--bg);
     padding:40px;
   }
-  #browser-home h2 {
+  #newtab-page.active { display:flex; }
+  #newtab-page h2 {
     font-family:'Syne',sans-serif;
-    font-size:28px;
+    font-size:32px;
     font-weight:800;
     background:linear-gradient(135deg,var(--p2),var(--p3));
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
   }
-  #browser-home p { color:var(--muted); font-size:14px; }
+  #newtab-clock {
+    font-family:'Syne',sans-serif;
+    font-size:64px;
+    font-weight:800;
+    background:linear-gradient(135deg,var(--p1),var(--p3));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    letter-spacing:-2px;
+  }
+  #newtab-date {
+    font-size:14px;
+    color:var(--muted);
+    margin-top:-20px;
+  }
+  #newtab-search {
+    display:flex;
+    gap:8px;
+    width:100%;
+    max-width:500px;
+  }
+  #newtab-search input {
+    flex:1;
+    background:rgba(168,85,247,0.1);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px 18px;
+    color:var(--text);
+    font-family:'DM Sans',sans-serif;
+    font-size:14px;
+    outline:none;
+    transition:border-color 0.2s, box-shadow 0.2s;
+  }
+  #newtab-search input:focus { border-color:var(--p2); box-shadow:var(--glow); }
+  #newtab-search input::placeholder { color:var(--muted); }
+  #newtab-search button {
+    background:linear-gradient(135deg,var(--p1),var(--p2));
+    border:none;
+    border-radius:12px;
+    color:#fff;
+    padding:12px 22px;
+    font-size:13px;
+    cursor:pointer;
+    font-family:'DM Sans',sans-serif;
+    font-weight:600;
+    transition:opacity 0.2s;
+  }
+  #newtab-search button:hover { opacity:0.85; }
+  .nt-shortcuts {
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+    max-width:600px;
+  }
+  .nt-chip {
+    padding:8px 18px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    font-size:13px;
+    cursor:pointer;
+    transition:all 0.2s;
+    color:var(--muted);
+  }
+  .nt-chip:hover { border-color:var(--p2); color:var(--text); background:rgba(168,85,247,0.15); }
 
-  /* Grid layouts */
+  /* ── HOME / GAMES / MOVIES / APPS ── */
   .grid { display:grid; gap:16px; }
   .grid-4 { grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); }
   .grid-5 { grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); }
-
-  /* Section header */
   .sec-title {
     font-family:'Syne',sans-serif;
     font-size:22px;
@@ -214,13 +438,7 @@
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
   }
-  .sec-sub {
-    color:var(--muted);
-    font-size:13px;
-    margin-bottom:20px;
-  }
-
-  /* Card */
+  .sec-sub { color:var(--muted); font-size:13px; margin-bottom:20px; }
   .card {
     background:var(--surface);
     border:1px solid var(--border);
@@ -244,40 +462,16 @@
     opacity:0;
     transition:opacity 0.25s;
   }
-  .card:hover {
-    border-color:var(--p2);
-    transform:translateY(-3px);
-    box-shadow:0 8px 25px rgba(168,85,247,0.2);
-  }
+  .card:hover { border-color:var(--p2); transform:translateY(-3px); box-shadow:0 8px 25px rgba(168,85,247,0.2); }
   .card:hover::before { opacity:1; }
   .card-icon {
-    width:52px;
-    height:52px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:26px;
-    background:rgba(168,85,247,0.15);
+    width:52px; height:52px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; background:rgba(168,85,247,0.15);
   }
-  .card-icon img {
-    width:36px;
-    height:36px;
-    border-radius:8px;
-    object-fit:contain;
-  }
-  .card-name {
-    font-size:12px;
-    font-weight:500;
-    color:var(--text);
-    line-height:1.3;
-  }
-  .card-tag {
-    font-size:10px;
-    color:var(--muted);
-  }
-
-  /* Movie card */
+  .card-icon img { width:36px; height:36px; border-radius:8px; object-fit:contain; }
+  .card-name { font-size:12px; font-weight:500; color:var(--text); line-height:1.3; }
+  .card-tag { font-size:10px; color:var(--muted); }
   .movie-card {
     background:var(--surface);
     border:1px solid var(--border);
@@ -288,163 +482,63 @@
     display:flex;
     flex-direction:column;
   }
-  .movie-card:hover {
-    border-color:var(--p2);
-    transform:translateY(-3px);
-    box-shadow:0 8px 25px rgba(168,85,247,0.2);
-  }
-  .movie-thumb {
-    height:80px;
-    background:linear-gradient(135deg,var(--p1),var(--p2));
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
-  }
+  .movie-card:hover { border-color:var(--p2); transform:translateY(-3px); box-shadow:0 8px 25px rgba(168,85,247,0.2); }
+  .movie-thumb { height:80px; background:linear-gradient(135deg,var(--p1),var(--p2)); display:flex; align-items:center; justify-content:center; font-size:30px; }
   .movie-info { padding:10px 12px; }
-  .movie-name {
-    font-size:13px;
-    font-weight:600;
-    margin-bottom:3px;
-  }
+  .movie-name { font-size:13px; font-weight:600; margin-bottom:3px; }
   .movie-sub { font-size:11px; color:var(--muted); }
-
-  /* Quick links */
-  .ql-row {
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
-  }
+  .ql-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
   .ql-chip {
-    padding:6px 14px;
-    border-radius:20px;
-    border:1px solid var(--border);
-    background:var(--surface);
-    font-size:12px;
-    cursor:pointer;
-    transition:all 0.2s;
-    color:var(--muted);
+    padding:6px 14px; border-radius:20px; border:1px solid var(--border);
+    background:var(--surface); font-size:12px; cursor:pointer;
+    transition:all 0.2s; color:var(--muted);
   }
-  .ql-chip:hover {
-    border-color:var(--p2);
-    color:var(--text);
-    background:rgba(168,85,247,0.15);
-  }
-
-  /* Search bar inside panels */
-  .panel-search {
-    display:flex;
-    gap:8px;
-    margin-bottom:20px;
-  }
+  .ql-chip:hover { border-color:var(--p2); color:var(--text); background:rgba(168,85,247,0.15); }
+  .panel-search { display:flex; gap:8px; margin-bottom:20px; }
   .panel-search input {
-    flex:1;
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:10px 14px;
-    color:var(--text);
-    font-family:'DM Sans',sans-serif;
-    font-size:13px;
-    outline:none;
+    flex:1; background:var(--surface); border:1px solid var(--border);
+    border-radius:10px; padding:10px 14px; color:var(--text);
+    font-family:'DM Sans',sans-serif; font-size:13px; outline:none;
     transition:border-color 0.2s;
   }
   .panel-search input:focus { border-color:var(--p2); }
   .panel-search input::placeholder { color:var(--muted); }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width:5px; }
-  ::-webkit-scrollbar-track { background:transparent; }
-  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:10px; }
-
-  /* Floating particles */
-  .particle {
-    position:fixed;
-    border-radius:50%;
-    pointer-events:none;
-    opacity:0.15;
-    animation:float linear infinite;
+  .badge {
+    display:inline-block; padding:3px 10px; border-radius:20px; font-size:10px;
+    font-weight:600; background:rgba(168,85,247,0.2); color:var(--p3);
+    border:1px solid rgba(168,85,247,0.3); margin-bottom:12px;
   }
+
+  /* Particles */
+  .particle { position:fixed; border-radius:50%; pointer-events:none; opacity:0.15; animation:float linear infinite; }
   @keyframes float {
-    0% { transform:translateY(100vh) scale(0); opacity:0; }
-    10% { opacity:0.15; }
-    90% { opacity:0.15; }
-    100% { transform:translateY(-100px) scale(1); opacity:0; }
+    0%{transform:translateY(100vh) scale(0);opacity:0}
+    10%{opacity:0.15} 90%{opacity:0.15}
+    100%{transform:translateY(-100px) scale(1);opacity:0}
   }
 
   /* Toast */
   #toast {
-    position:fixed;
-    bottom:20px;
-    left:50%;
+    position:fixed; bottom:20px; left:50%;
     transform:translateX(-50%) translateY(60px);
-    background:rgba(124,58,237,0.9);
-    color:#fff;
-    padding:10px 20px;
-    border-radius:10px;
-    font-size:13px;
-    backdrop-filter:blur(10px);
-    z-index:9999;
-    transition:transform 0.3s;
-    pointer-events:none;
+    background:rgba(124,58,237,0.9); color:#fff; padding:10px 20px;
+    border-radius:10px; font-size:13px; backdrop-filter:blur(10px);
+    z-index:9999; transition:transform 0.3s; pointer-events:none;
   }
   #toast.show { transform:translateX(-50%) translateY(0); }
 
-  /* Stealth mode button */
-  #stealth-btn {
-    padding:6px 12px;
-    border-radius:8px;
-    border:1px solid var(--border);
-    background:transparent;
-    color:var(--muted);
-    font-size:12px;
-    cursor:pointer;
-    transition:all 0.2s;
-    white-space:nowrap;
-    flex-shrink:0;
-  }
-  #stealth-btn:hover { color:var(--p3); border-color:var(--p2); }
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:10px; }
 
-  /* Panic key hint */
-  #panic-hint {
-    font-size:10px;
-    color:rgba(168,85,247,0.35);
-    white-space:nowrap;
-    flex-shrink:0;
-  }
-
-  /* About:blank overlay trick */
-  #blank-portal {
-    display:none;
-  }
-
-  /* Welcome animation */
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(16px); }
-    to { opacity:1; transform:translateY(0); }
-  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   .fadein { animation:fadeUp 0.4s ease both; }
   .fadein-2 { animation:fadeUp 0.4s ease 0.1s both; }
   .fadein-3 { animation:fadeUp 0.4s ease 0.2s both; }
-
-  /* Category badge */
-  .badge {
-    display:inline-block;
-    padding:3px 10px;
-    border-radius:20px;
-    font-size:10px;
-    font-weight:600;
-    background:rgba(168,85,247,0.2);
-    color:var(--p3);
-    border:1px solid rgba(168,85,247,0.3);
-    margin-bottom:12px;
-  }
 </style>
 </head>
 <body>
 
-<!-- Particles -->
 <script>
 for(let i=0;i<12;i++){
   const p=document.createElement('div');
@@ -458,23 +552,41 @@ for(let i=0;i<12;i++){
 <!-- TOP BAR -->
 <div id="topbar">
   <div id="logo" onclick="showPanel('home')">Surface<span>Proxy</span></div>
-
   <div id="nav">
     <button class="nav-btn active" onclick="showPanel('home')" data-panel="home">🏠 Home</button>
-    <button class="nav-btn" onclick="showPanel('browser')" data-panel="browser">🌐 Browser</button>
+    <button class="nav-btn" onclick="openBrowser()" data-panel="browser">🌐 Browser</button>
     <button class="nav-btn" onclick="showPanel('games')" data-panel="games">🎮 Games</button>
     <button class="nav-btn" onclick="showPanel('movies')" data-panel="movies">🎬 Movies</button>
     <button class="nav-btn" onclick="showPanel('apps')" data-panel="apps">📱 Apps</button>
   </div>
-
   <div id="urlbar-wrap">
     <span style="color:var(--muted);font-size:12px">🔍</span>
-    <input id="urlbar" placeholder="Search or enter URL..." onkeydown="if(event.key==='Enter')navigate()">
+    <input id="urlbar" placeholder="Search or enter URL..." onkeydown="if(event.key==='Enter')navigateTopBar()">
   </div>
-  <button id="go-btn" onclick="navigate()">Go</button>
-
+  <button id="go-btn" onclick="navigateTopBar()">Go</button>
   <button id="stealth-btn" onclick="stealth()">👁 Stealth</button>
   <div id="panic-hint">ESC = panic</div>
+</div>
+
+<!-- BROWSER CHROME (tabs + nav bar) -->
+<div id="browser-chrome">
+  <!-- Tab bar -->
+  <div id="tab-bar">
+    <!-- tabs injected here -->
+    <button id="new-tab-btn" onclick="newTab()" title="New tab">+</button>
+  </div>
+  <!-- Loading bar -->
+  <div id="load-bar"></div>
+  <!-- Nav bar -->
+  <div id="nav-bar">
+    <button class="ctrl-btn" id="btn-back" onclick="tabBack()" title="Back">&#8592;</button>
+    <button class="ctrl-btn" id="btn-fwd" onclick="tabForward()" title="Forward">&#8594;</button>
+    <button class="ctrl-btn" id="btn-reload" onclick="tabReload()" title="Reload">&#8635;</button>
+    <div id="nav-url-wrap">
+      <span id="ssl-badge">🔒</span>
+      <input id="nav-url" placeholder="Search or enter address..." onkeydown="if(event.key==='Enter')navigateNavBar()">
+    </div>
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -486,74 +598,68 @@ for(let i=0;i<12;i++){
       <div class="sec-title" style="font-size:32px">Welcome to SurfaceProxy</div>
       <div class="sec-sub">Your private portal. Browse freely. 🔮</div>
     </div>
-
     <div class="ql-row fadein-2">
       <div class="ql-chip" onclick="loadURL('https://duckduckgo.com')">🦆 DuckDuckGo</div>
       <div class="ql-chip" onclick="loadURL('https://google.com')">🔍 Google</div>
       <div class="ql-chip" onclick="loadURL('https://youtube.com')">▶️ YouTube</div>
       <div class="ql-chip" onclick="loadURL('https://discord.com/app')">💬 Discord</div>
+      <div class="ql-chip" onclick="openBrowser()">🌐 Open Browser</div>
       <div class="ql-chip" onclick="showPanel('games')">🎮 Games</div>
       <div class="ql-chip" onclick="showPanel('movies')">🎬 Movies</div>
     </div>
-
     <div class="fadein-3" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:8px;">
-      <div class="card" onclick="showPanel('browser')">
+      <div class="card" onclick="openBrowser()">
         <div class="card-icon">🌐</div>
-        <div>
-          <div class="card-name" style="font-size:14px;font-weight:700">Browser</div>
-          <div class="card-tag">Browse any site privately</div>
-        </div>
+        <div><div class="card-name" style="font-size:14px;font-weight:700">Browser</div><div class="card-tag">Browse any site privately</div></div>
       </div>
       <div class="card" onclick="showPanel('games')">
         <div class="card-icon">🎮</div>
-        <div>
-          <div class="card-name" style="font-size:14px;font-weight:700">Games</div>
-          <div class="card-tag">CrazyGames, Poki & more</div>
-        </div>
+        <div><div class="card-name" style="font-size:14px;font-weight:700">Games</div><div class="card-tag">Unblocked & ready</div></div>
       </div>
       <div class="card" onclick="showPanel('movies')">
         <div class="card-icon">🎬</div>
-        <div>
-          <div class="card-name" style="font-size:14px;font-weight:700">Movies</div>
-          <div class="card-tag">Stream anything, free</div>
-        </div>
+        <div><div class="card-name" style="font-size:14px;font-weight:700">Movies</div><div class="card-tag">Stream anything, free</div></div>
       </div>
       <div class="card" onclick="showPanel('apps')">
         <div class="card-icon">📱</div>
-        <div>
-          <div class="card-name" style="font-size:14px;font-weight:700">Apps</div>
-          <div class="card-tag">Discord, TikTok & more</div>
-        </div>
+        <div><div class="card-name" style="font-size:14px;font-weight:700">Apps</div><div class="card-tag">Discord, TikTok & more</div></div>
       </div>
     </div>
   </div>
 
   <!-- BROWSER -->
   <div id="panel-browser" class="panel">
-    <div id="browser-home">
-      <h2>Where do you want to go?</h2>
-      <p>Type in the address bar above and hit Go</p>
-      <div class="ql-row" style="justify-content:center">
-        <div class="ql-chip" onclick="loadURL('https://duckduckgo.com')">🦆 DuckDuckGo</div>
-        <div class="ql-chip" onclick="loadURL('https://google.com')">🔍 Google</div>
-        <div class="ql-chip" onclick="loadURL('https://youtube.com')">▶️ YouTube</div>
-        <div class="ql-chip" onclick="loadURL('https://reddit.com')">🤖 Reddit</div>
-        <div class="ql-chip" onclick="loadURL('https://wikipedia.org')">📖 Wikipedia</div>
-        <div class="ql-chip" onclick="loadURL('https://twitch.tv')">📡 Twitch</div>
+    <div id="frames-container">
+      <!-- New tab page -->
+      <div id="newtab-page" class="active">
+        <div id="newtab-clock">12:00</div>
+        <div id="newtab-date">Monday, May 25</div>
+        <div id="newtab-search">
+          <input id="nt-input" placeholder="Search DuckDuckGo or enter URL..." onkeydown="if(event.key==='Enter')ntSearch()">
+          <button onclick="ntSearch()">Go</button>
+        </div>
+        <div class="nt-shortcuts">
+          <div class="nt-chip" onclick="loadURL('https://duckduckgo.com')">🦆 DuckDuckGo</div>
+          <div class="nt-chip" onclick="loadURL('https://google.com')">🔍 Google</div>
+          <div class="nt-chip" onclick="loadURL('https://youtube.com')">▶️ YouTube</div>
+          <div class="nt-chip" onclick="loadURL('https://reddit.com')">🤖 Reddit</div>
+          <div class="nt-chip" onclick="loadURL('https://wikipedia.org')">📖 Wikipedia</div>
+          <div class="nt-chip" onclick="loadURL('https://twitch.tv')">📡 Twitch</div>
+          <div class="nt-chip" onclick="loadURL('https://discord.com/app')">💬 Discord</div>
+          <div class="nt-chip" onclick="loadURL('https://open.spotify.com')">🎵 Spotify</div>
+        </div>
       </div>
+      <!-- iframes added dynamically -->
     </div>
-    <iframe id="browser-frame" style="display:none" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"></iframe>
   </div>
 
   <!-- GAMES -->
   <div id="panel-games" class="panel">
     <div class="sec-title fadein">🎮 Games</div>
     <div class="sec-sub fadein-2">Click any game to play instantly</div>
-
     <div class="panel-search fadein-2">
       <input id="game-search" placeholder="Search games..." oninput="filterCards('game-search','games-grid','game-card')">
     </div>
-
     <div class="badge">Unblocked</div>
     <div class="grid grid-4" id="games-grid"></div>
   </div>
@@ -569,22 +675,24 @@ for(let i=0;i<12;i++){
   <div id="panel-apps" class="panel">
     <div class="sec-title fadein">📱 Apps</div>
     <div class="sec-sub fadein-2">Your favorite apps, right here</div>
-
     <div class="panel-search fadein-2">
       <input id="app-search" placeholder="Search apps..." oninput="filterCards('app-search','apps-grid','app-card')">
     </div>
-
     <div class="grid grid-5" id="apps-grid"></div>
   </div>
 
 </div>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
 <script>
-// ── DATA ──
+// ── CONFIG ──
+const PROXY_BACKEND = 'http://localhost:3000'; // change to Railway URL when deployed
+function proxyURL(target) {
+  return `${PROXY_BACKEND}/proxy?url=${encodeURIComponent(target)}`;
+}
 
+// ── DATA ──
 const GAMES = [
   { name:'Shell Shockers', icon:'🥚', url:'https://shellshock.io', tag:'Shooter' },
   { name:'Slope', icon:'🔵', url:'https://slope-game.com', tag:'Arcade' },
@@ -607,9 +715,7 @@ const GAMES = [
   { name:'Friday Night Funkin', icon:'🎵', url:'https://www.newgrounds.com/portal/view/770371', tag:'Music' },
   { name:'Among Us Online', icon:'🚀', url:'https://www.crazygames.com/game/among-us-online-edition', tag:'Social' },
 ];
-
 const MOVIES = [
-  { name:'WatchSurface', icon:'🟣', url:'https://watchsurface.stream', sub:'Primary • Movies & TV', emoji:'🎬' },
   { name:'Cineby', icon:'🎥', url:'https://cineby.app', sub:'Movies & TV', emoji:'📽️' },
   { name:'Movish', icon:'🌊', url:'https://movish.net', sub:'Free Streaming', emoji:'🍿' },
   { name:'Sflix', icon:'⚡', url:'https://sflix.to', sub:'HD Movies', emoji:'🌟' },
@@ -618,7 +724,6 @@ const MOVIES = [
   { name:'Soap2Day', icon:'📺', url:'https://soap2day.to', sub:'TV Series', emoji:'📺' },
   { name:'BFlix', icon:'💫', url:'https://bflix.gg', sub:'4K Content', emoji:'💎' },
 ];
-
 const APPS = [
   { name:'Google', icon:'https://www.google.com/favicon.ico', url:'https://google.com', tag:'Search' },
   { name:'YouTube', icon:'https://youtube.com/favicon.ico', url:'https://youtube.com', tag:'Video' },
@@ -642,21 +747,17 @@ const APPS = [
   { name:'Wikipedia', icon:'https://wikipedia.org/favicon.ico', url:'https://wikipedia.org', tag:'Info' },
 ];
 
-// ── RENDER ──
-
+// ── RENDER CARDS ──
 function buildGames() {
-  const g = document.getElementById('games-grid');
-  g.innerHTML = GAMES.map(x => `
+  document.getElementById('games-grid').innerHTML = GAMES.map(x => `
     <div class="card game-card" onclick="loadURL('${x.url}')">
       <div class="card-icon">${x.icon}</div>
       <div class="card-name">${x.name}</div>
       <div class="card-tag">${x.tag}</div>
     </div>`).join('');
 }
-
 function buildMovies() {
-  const g = document.getElementById('movies-grid');
-  g.innerHTML = MOVIES.map(x => `
+  document.getElementById('movies-grid').innerHTML = MOVIES.map(x => `
     <div class="movie-card" onclick="loadURL('${x.url}')">
       <div class="movie-thumb">${x.emoji}</div>
       <div class="movie-info">
@@ -665,95 +766,236 @@ function buildMovies() {
       </div>
     </div>`).join('');
 }
-
 function buildApps() {
-  const g = document.getElementById('apps-grid');
-  g.innerHTML = APPS.map(x => `
+  document.getElementById('apps-grid').innerHTML = APPS.map(x => `
     <div class="card app-card" onclick="loadURL('${x.url}')">
       <div class="card-icon"><img src="${x.icon}" onerror="this.parentNode.textContent='📱'"></div>
       <div class="card-name">${x.name}</div>
       <div class="card-tag">${x.tag}</div>
     </div>`).join('');
 }
-
 buildGames(); buildMovies(); buildApps();
 
-// ── NAVIGATION ──
+// ── TAB SYSTEM ──
+let tabs = [];       // { id, url, title, favicon, frameEl, tabEl }
+let activeTabId = null;
+let tabCounter = 0;
 
+function newTab(url) {
+  const id = ++tabCounter;
+  const frameEl = document.createElement('iframe');
+  frameEl.className = 'browser-frame';
+  frameEl.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation allow-modals');
+  frameEl.setAttribute('referrerpolicy', 'no-referrer');
+  document.getElementById('frames-container').appendChild(frameEl);
+
+  const tabEl = document.createElement('div');
+  tabEl.className = 'tab';
+  tabEl.dataset.id = id;
+  tabEl.innerHTML = `
+    <img class="tab-favicon" src="" onerror="this.style.display='none'" style="display:none">
+    <span class="tab-title">New Tab</span>
+    <span class="tab-close" onclick="closeTab(${id},event)">✕</span>`;
+  tabEl.addEventListener('click', () => switchTab(id));
+  document.getElementById('tab-bar').insertBefore(tabEl, document.getElementById('new-tab-btn'));
+
+  const tab = { id, url: '', title: 'New Tab', frameEl, tabEl };
+  tabs.push(tab);
+  switchTab(id);
+
+  if (url) navigateTo(id, url);
+  return id;
+}
+
+function switchTab(id) {
+  activeTabId = id;
+  tabs.forEach(t => {
+    t.frameEl.classList.toggle('active', t.id === id);
+    t.tabEl.classList.toggle('active', t.id === id);
+  });
+  const tab = getTab(id);
+  if (tab) {
+    document.getElementById('nav-url').value = tab.url || '';
+    document.getElementById('newtab-page').classList.toggle('active', !tab.url);
+  }
+}
+
+function closeTab(id, e) {
+  e.stopPropagation();
+  const idx = tabs.findIndex(t => t.id === id);
+  if (idx === -1) return;
+  const tab = tabs[idx];
+  tab.frameEl.remove();
+  tab.tabEl.remove();
+  tabs.splice(idx, 1);
+
+  if (tabs.length === 0) {
+    // No tabs left — go back to home or open new tab
+    showPanel('home');
+    document.getElementById('browser-chrome').classList.remove('visible');
+    return;
+  }
+  // Switch to adjacent tab
+  const nextIdx = Math.min(idx, tabs.length - 1);
+  switchTab(tabs[nextIdx].id);
+}
+
+function getTab(id) { return tabs.find(t => t.id === id); }
+
+function navigateTo(id, url) {
+  const tab = getTab(id);
+  if (!tab) return;
+
+  // Resolve URL
+  let resolved = url.trim();
+  const looksLikeURL = resolved.includes('.') && !resolved.includes(' ');
+  if (!resolved.startsWith('http') && !looksLikeURL) {
+    resolved = 'https://duckduckgo.com/?q=' + encodeURIComponent(resolved);
+  } else if (!resolved.startsWith('http')) {
+    resolved = 'https://' + resolved;
+  }
+
+  tab.url = resolved;
+  document.getElementById('nav-url').value = resolved;
+  document.getElementById('newtab-page').classList.remove('active');
+
+  // Show loading
+  const bar = document.getElementById('load-bar');
+  bar.classList.add('loading');
+
+  tab.frameEl.src = proxyURL(resolved);
+  tab.frameEl.classList.add('active');
+
+  // Update favicon attempt
+  try {
+    const domain = new URL(resolved).hostname;
+    const favicon = tab.tabEl.querySelector('.tab-favicon');
+    favicon.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+    favicon.style.display = 'block';
+  } catch(e) {}
+
+  tab.frameEl.onload = () => {
+    bar.classList.remove('loading');
+    // Update tab title if possible
+    try {
+      const t = tab.frameEl.contentDocument.title;
+      if (t) { tab.title = t; tab.tabEl.querySelector('.tab-title').textContent = t; }
+    } catch(e) {
+      // Cross-origin, that's fine
+      const domain = new URL(resolved).hostname.replace('www.','');
+      tab.title = domain;
+      tab.tabEl.querySelector('.tab-title').textContent = domain;
+    }
+  };
+}
+
+function tabBack() {
+  const tab = getTab(activeTabId);
+  if (tab) try { tab.frameEl.contentWindow.history.back(); } catch(e) {}
+}
+function tabForward() {
+  const tab = getTab(activeTabId);
+  if (tab) try { tab.frameEl.contentWindow.history.forward(); } catch(e) {}
+}
+function tabReload() {
+  const tab = getTab(activeTabId);
+  if (tab && tab.frameEl.src) tab.frameEl.src = tab.frameEl.src;
+}
+
+// ── NAV BAR INPUT ──
+function navigateNavBar() {
+  const val = document.getElementById('nav-url').value.trim();
+  if (!val) return;
+  if (activeTabId) {
+    navigateTo(activeTabId, val);
+  } else {
+    newTab(val);
+  }
+}
+
+// Top bar (global) navigate
+function navigateTopBar() {
+  const val = document.getElementById('urlbar').value.trim();
+  if (!val) return;
+  openBrowser();
+  setTimeout(() => {
+    if (activeTabId) navigateTo(activeTabId, val);
+    else newTab(val);
+  }, 50);
+}
+
+// New tab page search
+function ntSearch() {
+  const val = document.getElementById('nt-input').value.trim();
+  if (!val) return;
+  if (activeTabId) navigateTo(activeTabId, val);
+}
+
+// ── OPEN BROWSER ──
+function openBrowser() {
+  // Switch panel
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-browser').classList.add('active');
+  const btn = document.querySelector('[data-panel="browser"]');
+  if (btn) btn.classList.add('active');
+
+  // Show chrome
+  document.getElementById('browser-chrome').classList.add('visible');
+
+  // If no tabs exist, create one
+  if (tabs.length === 0) newTab();
+}
+
+// ── LOAD URL (from cards etc) ──
+function loadURL(url) {
+  openBrowser();
+  setTimeout(() => {
+    if (activeTabId) navigateTo(activeTabId, url);
+    else newTab(url);
+  }, 50);
+}
+
+// ── SHOW OTHER PANELS ──
 function showPanel(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
   const btn = document.querySelector(`[data-panel="${id}"]`);
-  if(btn) btn.classList.add('active');
+  if (btn) btn.classList.add('active');
 
-  // Hide iframe when leaving browser
-  if(id !== 'browser') {
-    const frame = document.getElementById('browser-frame');
-    const home = document.getElementById('browser-home');
-    frame.style.display = 'none';
-    home.style.display = 'flex';
+  if (id !== 'browser') {
+    document.getElementById('browser-chrome').classList.remove('visible');
   }
 }
 
-function loadURL(url) {
-  showPanel('browser');
-  const frame = document.getElementById('browser-frame');
-  const home = document.getElementById('browser-home');
-  document.getElementById('urlbar').value = url;
-
-  // Try iframe first
-  frame.src = 'https://surface-proxy--latif942a.replit.app';
-  frame.style.display = 'block';
-  home.style.display = 'none';
-
-  // Fallback: open in new about:blank tab with redirect
-  frame.onerror = () => openBlank(url);
+// ── CLOCK ──
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('newtab-clock').textContent = `${h}:${m}`;
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('newtab-date').textContent =
+    `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
 }
+updateClock();
+setInterval(updateClock, 10000);
 
-function navigate() {
-  let val = document.getElementById('urlbar').value.trim();
-  if(!val) return;
-  if(!val.startsWith('http') && !val.includes('.')) {
-    val = 'https://duckduckgo.com/?q=' + encodeURIComponent(val);
-  } else if(!val.startsWith('http')) {
-    val = 'https://' + val;
-  }
-  loadURL(val);
-}
-
-function openBlank(url) {
-  // Opens in a new tab disguised as about:blank
-  const w = window.open('about:blank','_blank');
-  if(w) {
-    w.document.write(`<!DOCTYPE html><html><head><title>New Tab</title></head><body style="margin:0;padding:0;overflow:hidden"><iframe src="${url}" style="width:100vw;height:100vh;border:none"></iframe></body></html>`);
-    w.document.close();
-  }
-}
-
-// ── STEALTH (about:blank camo) ──
+// ── STEALTH ──
 function stealth() {
-  // Disguise current tab as about:blank
-  const w = window.open('','_self');
-  // Store current page in sessionStorage, replace with blank appearance
-  sessionStorage.setItem('sp_restore','true');
   document.title = 'New Tab';
-  // Replace visible content with blank
   document.body.style.background = '#fff';
   document.body.innerHTML = '<div style="background:#fff;width:100vw;height:100vh"></div>';
-  toast('Stealth mode — press ESC to restore');
-  sessionStorage.setItem('sp_html', ''); // can't fully restore but tab looks blank
 }
 
-// ── PANIC KEY ──
+// ── PANIC ──
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') {
-    // Redirect to Google
-    window.location.href = 'https://www.google.com';
-  }
+  if (e.key === 'Escape') window.location.href = 'https://www.google.com';
 });
 
-// ── SEARCH FILTER ──
+// ── FILTER ──
 function filterCards(inputId, gridId, cardClass) {
   const q = document.getElementById(inputId).value.toLowerCase();
   document.querySelectorAll('#'+gridId+' .'+cardClass).forEach(c => {
